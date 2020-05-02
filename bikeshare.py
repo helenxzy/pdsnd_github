@@ -59,6 +59,8 @@ def get_filters():
     return city, month, day
 
 def validity_check():
+    """Asks the user whether the input is correct. If not, give a chance for correction."""
+
     while True:
         validity = str(input("Is your input correct? Type 'yes' to continue and 'no' to restart: \n").strip().lower())
         if validity not in ("yes", "no"):
