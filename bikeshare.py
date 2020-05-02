@@ -17,9 +17,9 @@ def get_filters():
     """
     print('Hello! Let\'s explore some US bikeshare data!')
     validity = False
-    
+
     # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
-    while True: 
+    while True:
         city = str(input("\nWhich city would you like to filter by? (Choose from Chicago, New York City, Washington): ").strip().lower())
         if city not in ("chicago", "new york city", "washington"):
             print("\nInvalid entry. Please try again")
@@ -51,22 +51,22 @@ def get_filters():
             print("\nIt looks like you want to filter by: '{}' ".format(day.title()))
             validity_check()
             break
-    
+
     print("\nYou selected '{}' as city, '{}' as month, and '{}' as day. \nFiltering by your parameters....".format(city.title(), month.title(), day.title()))
     print()
 
     print('-'*40)
     return city, month, day
 
-def validity_check(): 
-    while True: 
+def validity_check():
+    while True:
         validity = str(input("Is your input correct? Type 'yes' to continue and 'no' to restart: \n").strip().lower())
         if validity not in ("yes", "no"):
             print("\nInvalid entry. Please try again")
             continue
         elif validity == 'yes':
             break
-        else: 
+        else:
             get_filters()
 
 
@@ -84,10 +84,10 @@ def load_data(city, month, day):
     # load data file into a dataframe
     df = pd.read_csv(CITY_DATA[city])
 
-    # convert the Start Time column to datetime
+    # convert the 'Start Time' column to datetime
     df['Start Time'] = pd.to_datetime(df['Start Time'])
 
-    # extract month / day of week / Hour from Start Time to create new columns
+    # extract month / day of week / hour from 'Start Time' to create new columns
     df['Month'] = df['Start Time'].dt.month
     df['Day'] = df['Start Time'].dt.weekday_name
     df['Hour'] = df['Start Time'].dt.hour
@@ -97,7 +97,7 @@ def load_data(city, month, day):
        # use the index of the months list to get the corresponding int
         months = ['january', 'february', 'march', 'april', 'may', 'june']
         month = months.index(month) + 1
-        
+
         # filter by month to create the new dataframe
         df = df[df['Month'] == month]
 
@@ -113,8 +113,8 @@ def time_stats(df):
 
     print('\nCalculating The Most Frequent Times of Travel...\n')
     start_time = time.time()
-    
-    dictionary = {'1': 'January', '2': 'February', '3': 'March', '4': 'April', '5': 'May', '6': 'June', 
+
+    dictionary = {'1': 'January', '2': 'February', '3': 'March', '4': 'April', '5': 'May', '6': 'June',
                   '7': 'July', '8': 'August', '9': 'September', '10': 'October', '11': 'November', '12': 'December'}
 
     # TO DO: display the most common month
@@ -129,7 +129,7 @@ def time_stats(df):
     # TO DO: display the most common start hour
     popular_hour = df['Hour'].mode()[0]
     print('Most common start hour: ', popular_hour)
-    
+
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
@@ -171,7 +171,7 @@ def trip_duration_stats(df):
     # TO DO: display mean travel time
     mean_travel_time = df['Trip Duration'].mean()
     print("Mean travel time in seconds: ", mean_travel_time)
-    
+
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
@@ -187,7 +187,7 @@ def user_stats(df):
     print(user_type_count)
 
     # TO DO: Display counts of gender
-    if "Gender" in df.columns: 
+    if "Gender" in df.columns:
         gender_count = df["Gender"].value_counts()
         # count null values
         nan_values = df["Gender"].isna().sum()
@@ -203,11 +203,11 @@ def user_stats(df):
         print("\nEarliest birth year: '{}'. \nMost recent birth year: '{}'. \nMost common birth year: '{}'.".format(earliest, most_recent, most_common))
     else:
         print("\nThe dataset does not have a 'Birth Year' column.")
-        
+
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
-    
-    
+
+
 def display_raw_data(df):
     """
     Asks if the user would like to see some lines of data from the filtered dataset.
@@ -251,4 +251,3 @@ def main():
 
 if __name__ == "__main__":
 	main()
-
